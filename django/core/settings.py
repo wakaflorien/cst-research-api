@@ -13,7 +13,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu
 DEBUG = os.environ.get('DEBUG', '') != 'False'
 # DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'nameless-waters-17804.herokuapp.com']
+ALLOWED_HOSTS = ['nameless-waters-17804.herokuapp.com']
 
 
 # Application definition
