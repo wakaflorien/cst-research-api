@@ -1,1 +1,1 @@
-web: gunicorn cst_research_monitoring.wsgi --log-file -
+web: gunicorn cst-research-api.wsgi --log-file -
