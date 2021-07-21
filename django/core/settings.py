@@ -4,19 +4,20 @@ import django_on_heroku
 import dj_database_url
 
 
-# BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECRET_KEY = 'django-insecure-k^8bcdroc@(jkkq%va22otz1n2(rrd68s!c9a$m(*rq%x0lqry'
-# SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
+SECRET_KEY = 'django-insecure-k^8bcdroc@(jkkq%va22otz1n2(rrd68s!c9a$m(*rq%x0lqry'
+SECRET_KEY = os.environ['SECRET_KEY'] 
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+# SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
 
-# DEBUG = False
+# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'https://git.heroku.com/cst-research-api.com']
-# ALLOWED_HOSTS = ['*']
+DEBUG = True
+
+# ALLOWED_HOSTS = ['127.0.0.1', 'https://git.heroku.com/cst-research-api.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -57,11 +58,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'core.urls'
-
-# WSGI_APPLICATION = 'home.wsgi.dev.application'
-WSGI_APPLICATION = 'core.wsgi.application'
 
 TEMPLATES = [
     {
@@ -79,6 +77,7 @@ TEMPLATES = [
     },
 ]
 
+# WSGI_APPLICATION = 'home.wsgi.dev.application'
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
@@ -130,34 +129,9 @@ USE_L10N = True
 USE_TZ = True
 SITE_ID = 1
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         # 'rest_framework.permissions.IsAuthenticated',
-#         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-#     ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.TokenAuthentication',
-#         'rest_framework.authentication.SessionAuthentication',
-#         'rest_framework.authentication.BasicAuthentication',
-#     ),
-# }
 
-# CSRF_COOKIE_NAME = "csrftoken"
-
-# ACCOUNT_UNIQUE_EMAIL = True
-# ACCOUNT_EMAIL_REQUIRED = False
-# ACCOUNT_AUTHENTICATION_METHOD = 'username'
-# ACCOUNT_EMAIL_VERIFICATION = 'none'
-# AUTH_USER_MODEL = 'users.User'
-
-# REST_AUTH_SERIALIZERS = {
-#     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
-# }
-
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
-# }
-
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
