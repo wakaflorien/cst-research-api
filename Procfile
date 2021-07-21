@@ -1,1 +1,1 @@
-web: gunicorn cst-research-api.wsgi --log-file -
+web: gunicorn django.wsgi --log-file -
