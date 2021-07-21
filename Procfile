@@ -1,0 +1,1 @@
+web: gunicorn cst_research_monitoring.wsgi --log-file -
