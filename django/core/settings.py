@@ -15,8 +15,8 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 # DEBUG = False
 
-# ALLOWED_HOSTS = ['127.0.0.1', 'nameless-waters-17804.herokuapp.com']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'https://git.heroku.com/cst-research-api.com']
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
