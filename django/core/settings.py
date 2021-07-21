@@ -1,5 +1,6 @@
 import os
 import django_on_heroku
+
 from pathlib import Path
 
 # BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,12 +8,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECRET_KEY = 'django-insecure-k^8bcdroc@(jkkq%va22otz1n2(rrd68s!c9a$m(*rq%x0lqry'
 # SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = os.environ.get('DEBUG', '') != 'False'
 # DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'nameless-waters-17804.heh10rokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'nameless-waters-17804.herokuapp.com']
 
 
 # Application definition
