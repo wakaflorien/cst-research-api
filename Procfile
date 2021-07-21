@@ -1,1 +1,0 @@
-web: gunicorn cst-research-api.wsgi --log-file -
