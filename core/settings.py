@@ -17,8 +17,8 @@ SECRET_KEY = 'django-insecure-k^8bcdroc@(jkkq%va22otz1n2(rrd68s!c9a$m(*rq%x0lqry
 
 DEBUG = False
 
-# ALLOWED_HOSTS = ['127.0.0.1', 'https://cst-research-api.herokuapp.com/']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'cst-research-api.herokuapp.com']
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
