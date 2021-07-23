@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-k^8bcdroc@(jkkq%va22otz1n2(rrd68s!c9a$m(*rq%x0lqry
 
 # DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1', 'https://git.heroku.com/cst-research-api.com']
 ALLOWED_HOSTS = ['*']
