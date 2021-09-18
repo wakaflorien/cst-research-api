@@ -1,9 +1,7 @@
 from django.db import models
-from rest_framework.validators import UniqueValidator
-from rest_framework.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.contrib.auth import get_user_model
-import random
+# from staff.models import Staff
 from django.utils import timezone
 from isbn_field import ISBNField
 from djmoney.models.fields import MoneyField
@@ -22,10 +20,14 @@ class Tbl_Research(models.Model):
         research_title = models.CharField(max_length=100)
         starting_date = models.DateTimeField(auto_now_add=True)
         ending_date = models.DateTimeField(auto_now_add=True)
-        # amount = models.FloatField()
         amount = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
         status = models.CharField(max_length=20)
-        # staff = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+        document = models.FileField(max_length=1000)
+        created_at = models.DateTimeField()
+        updated_at = models.DateTimeField()
+ 
+        staff = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
         def __str__(self):
             return self.research_title
@@ -36,11 +38,10 @@ class Tbl_conference(models.Model):
     
     def generate_pk():
             counter=0
-            counter = Tbl_Research.objects.count()
+            counter = Tbl_conference.objects.count()
             counter += 1
             return 'PRJA'+str(counter)
 
-    research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
     confer_id = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
     confer_name = models.CharField(max_length=100)
     author = models.EmailField(max_length=100)
@@ -61,21 +62,19 @@ class Tbl_chap_based(models.Model):
 
     def generate_pk():
             counter=0
-            counter = Tbl_Research.objects.count()
+            counter = Tbl_chap_based.objects.count()
             counter += 1
             return 'RBB'+str(counter)
 
-    research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
     chap_based_id = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
     chapter_title = models.CharField(max_length=100)
     author = models.EmailField(max_length=100)
     publication_year = models.DateTimeField(auto_now_add=True)
     book_title = models.CharField(max_length=100)
-    chap_pages = models.CharField(max_length=100)
+    chapNumbers = models.CharField(max_length=100)
     place = models.CharField(max_length=100)
     editor = models.CharField(max_length=100)
     no_of_pages = models.CharField(max_length=100)
-    # ISBN = models.CharField(max_length=100)
     ISBN = ISBNField(clean_isbn=False)
     research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
 
@@ -84,17 +83,13 @@ class Tbl_chap_based(models.Model):
 
 
 class BookBased(models.Model):
-    # def validate_date(date):
-    #  if date > models.timezone.now().date():
-    #     raise ValidationError ("Research publication cannot be done in the future")
 
     def generate_pk():
             counter=0
-            counter = Tbl_Research.objects.count()
+            counter = BookBased.objects.count()
             counter += 1
             return 'RBB'+str(counter)
 
-    research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
     alphabetic = RegexValidator(r'[A-Za-z ]+', 'Only alphabetic characters are allowed.')
     bookbased_id = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
     title = models.CharField(max_length= 100,  validators = [alphabetic])
@@ -104,8 +99,8 @@ class BookBased(models.Model):
     publisher = models.CharField(max_length= 100)
     place = models.CharField(max_length= 100)
     pages = models.PositiveSmallIntegerField()
-    # isbn = models.CharField(max_length= 100)
     isbn = ISBNField(clean_isbn=False)
+    research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
 
 
     def __str__(self):
@@ -114,17 +109,12 @@ class BookBased(models.Model):
 
 
 class JournalTb(models.Model):
-    # def validate_date(date):
-    #  if date > models.timezone.now().date():
-    #     raise ValidationError ("Research publication cannot be done in the future")
-
     def generate_pk():
             counter=0
-            counter = Tbl_Research.objects.count()
+            counter = JournalTb.objects.count()
             counter += 1
             return 'PRJA'+str(counter)
 
-    # research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
     alphabetic = RegexValidator(r'[A-Za-z ]+', 'Only alphabetic characters are allowed.')
     journal_id = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
     title = models.CharField(max_length= 100, validators = [alphabetic])
@@ -137,6 +127,7 @@ class JournalTb(models.Model):
     pages = models.PositiveSmallIntegerField()
     issn= models.CharField(max_length= 100)
     impact_factor = models.TextField()
+    research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -146,17 +137,16 @@ class Colaborator(models.Model):
 
     def generate_pk():
             counter=0
-            counter = Tbl_Research.objects.count()
+            counter = Colaborator.objects.count()
             counter += 1
-            return 'PRJA'+str(counter)
+            return 'CT'+str(counter)
 
     colaborator_id = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
-    # staff = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    staff = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     research = models.ManyToManyField(Tbl_Research)
-    # name = models.CharField(max_length= 100, default= "your name")
 
     def __str__(self):
-        return self.name
+        return self.staff
 
 
 
@@ -164,17 +154,16 @@ class CommunityEngagement(models.Model):
 
     def generate_pk():
             counter=0
-            counter = Tbl_Research.objects.count()
+            counter = CommunityEngagement.objects.count()
             counter += 1
-            return 'CA'+str(counter)
+            return 'CE'+str(counter)
 
     engagementId = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
     specializedArea = models.CharField(max_length=100)
     communityActivity = models.CharField(max_length=100)
     output = models.CharField(max_length=200)
     planEngagementUsed = models.CharField(max_length=200)
-    # staff = models.ForeignKey(get_user_model(),
-    #                             on_delete=models.CASCADE)
+    staff = models.ForeignKey(get_user_model(),on_delete=models.CASCADE)
 
     def __str__(self):
         return self.output
@@ -184,16 +173,15 @@ class MentorShip(models.Model):
 
     def generate_pk():
             counter=0
-            counter = Tbl_Research.objects.count()
+            counter = MentorShip.objects.count()
             counter += 1
-            return 'PGSM'+str(counter)
+            return 'MS'+str(counter)
 
     mentorshipId = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
     level = models.CharField(max_length=100)
     projectTitle = models.CharField(max_length=100)
     university = models.CharField(max_length=100)
-    # staff = models.ForeignKey(get_user_model(),
-    #                             on_delete=models.CASCADE)
+    staff = models.ForeignKey(get_user_model(),on_delete=models.CASCADE)
 
     def __str__(self):
         return self.projectTitle
@@ -227,7 +215,7 @@ class PeerReviewedInternational(models.Model):
     serialNumber = models.CharField(default=sn, primary_key=True, max_length=200, unique=True)
     # staff = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     college = models.CharField(choices=COLLEGE, max_length=100)
-    # authors = models.ManyToManyField(Authors)
+    authors = models.ManyToManyField(Authors)
     nameOfConference = models.CharField(max_length=100)
     organizer = models.CharField(max_length=50)
     theme = models.CharField(max_length=50)
@@ -236,6 +224,7 @@ class PeerReviewedInternational(models.Model):
     editor = models.CharField(max_length=30)
     noOfPages = models.IntegerField(default=0)
     isbn = ISBNField(clean_isbn=False)
+    research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.serialNumber
@@ -249,7 +238,6 @@ class ResearchInnovation(models.Model):
         return "RPC"+ str(counter)
 
     serialNumber = models.CharField(default=sn, primary_key=True, max_length=200, unique=True)
-    # staff = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     research = models.ForeignKey(Tbl_Research, on_delete=models.CASCADE)
     fundingResource = models.CharField(max_length=50)
     fundingAmount = MoneyField(max_digits=14, decimal_places=2, default_currency='RWF')

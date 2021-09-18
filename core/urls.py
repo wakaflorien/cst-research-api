@@ -14,25 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from django.views import static
-
-from django.views.static import serve
+from django.urls import path, include, re_path
 from django.conf.urls import url
 
+from rest_auth.registration.views import VerifyEmailView
+from rest_auth.views import PasswordResetView, PasswordResetConfirmView
+from allauth.account.views import confirm_email
+# from staff.views import ConfirmEmailView
+
 urlpatterns = [
+    
+    path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
-      path('accounts/', include('allauth.urls')),
-    # path('api/users/', include('users.urls')),
-    path('api/teaching/', include('teaching_activities.urls')),
-    path('admin/', admin.site.urls),
-    path('api/research/', include('research.urls')),
+    path('staff/', include('staff.urls')),
+    path('teaching/', include('teaching_activities.urls')),
+    path('', include('research.urls')),
     path('cst/', include('cst_data.urls')),
-  
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    
+    # re_path(r"^account-confirm-email/(?P<key>[-:\w]+)/$", confirm_email, name="account_confirm_email"),
+    # url(r'^rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', ConfirmEmailView.as_view(), name='account_confirm_email'),
 
-    # url(r'^media/(?P<path>.*)$', serve,{'document_root':  settings.MEDIA_ROOT}), 
-    # url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+    # url(r'^rest-auth/password/reset/$', PasswordResetView.as_view(), name='password_reset'),
+    # url(r'^rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    
 ]
-# urlpatterns = urlpatterns+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
