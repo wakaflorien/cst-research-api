@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 
-
+# from staff.models import Staff
 #Teaching in higher learning institution certificate (THLIC)
 class THLIC_Certificate(models.Model):
 
@@ -24,9 +24,9 @@ class THLIC_Certificate(models.Model):
 
     certificate_id = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
     certificate_name = models.CharField(max_length=100)
-#     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     certificate_obtained_Yes_Or_No = models.BooleanField(default=False)
     date = models.DateField()
+    staff = models.ForeignKey(get_user_model(), default=0, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.certificate_name
@@ -53,9 +53,9 @@ class Teaching_portofolio(models.Model):
 
     certificate_id = models.CharField(default=generate_pk, primary_key=True, max_length=255, unique=True)
     TP_name = models.CharField(max_length=100)
-#     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     TP_Developed = models.BooleanField(default=False)
     date = models.DateField()
+    staff = models.ForeignKey(get_user_model(), default=0, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.TP_name 
