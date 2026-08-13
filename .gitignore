@@ -78,3 +78,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 .gitignore
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
