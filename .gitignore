@@ -38,6 +38,7 @@
 # .idea/artifacts
 # .idea/compiler.xml
 # .idea/jarRepositories.xml
+temp_auto_push.bat
 # .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
@@ -78,3 +79,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 .gitignore
+branch_structure.json
